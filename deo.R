@@ -114,7 +114,9 @@ mode=aov(Battrey~material_type*typeperature, data=my_data)
 summary(mode)
 
 str(my_data)
-
+################## install packge 
+library(remotes)
+remotes::install_github("ehassler/MontgomeryDAE")
 ###### use library table 5.1
 library(MontgomeryDAE)
 data(package="MontgomeryDAE")
@@ -149,6 +151,29 @@ interaction.plot(
   trace.label = deparse1(substitute(type.material))
 )
 dev.off()
+
+TukeyHSD(mode1, "Temperature")  #test tukey for Temperature
+TukeyHSD(mode1, "MaterialType")  #test tukey for MaterialType
+
+library(emmeans)
+?emmeans
+emmeans(mode1, pairwise~MaterialType|Temperature)
+emmeans(mode1, pairwise~MaterialType|Temperature, at=list(Temperature="70"))
+par(mfrow=c(2,,2))
+plot(mode1)
+plot(mode1$residuals~as.character(my_data1$Temperature))
+plot(mode1$residuals~as.character(my_data1$MaterialType))
+mode3<-model.tables(mode1, type="means", se=T)
+############# The Assumption of No Interaction in a  Two-Factor Model
+library(MontgomeryDAE)
+data(package="MontgomeryDAE")
+my_data2<-Table5.1
+str(my_data2)
+my_data2$Temperature<-as.factor(my_data2$Temperature)
+str(my_data2)
+mod4<-aov(my_data2$BatteryLife~my_data2$MaterialType + my_data2$Temperature)
+summary(mod4)
+plot(mod4$fitted.values, mode1$fitted.values-mod4$fitted.values, pch=19)
 ### enter method row and col
 set.seed(1245)
 
