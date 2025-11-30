@@ -299,3 +299,50 @@ interaction.plot(
   main="intrcation type_Glass::phosphor_type"
 )
 dev.off()
+##### example5.3
+A<-factor(rep(c(10, 12, 14), each=2, times=4))
+B<-factor(rep(c(25, 30),each=12))
+C<- factor(rep(c(200, 250), each = 6, times =2 ))
+y<-c(-3, -1, 0, 1, 5, 4, 
+        -1, 0, 2, 1, 7, 6,
+        -1, 0, 2, 3, 7, 9, 
+        1, 1, 6, 5, 10, 11)
+eamaple5.3<-data.frame(A , B, C , y)
+
+mode0<-aov(y~A*B*C, data=eamaple5.3)
+summary(mode0)
+##############################################################
+library(MontgomeryDAE)
+Eamaple5_13<-Table5.13
+Eamaple5_13$PctCarbonation<-factor(Eamaple5_13$PctCarbonation)
+Eamaple5_13$OperatingPressure<-as.factor(Eamaple5_13$OperatingPressure)
+Eamaple5_13$LineSpeed<-as.factor(Eamaple5_13$LineSpeed)
+str(Eamaple5_13)
+mod<-aov(FillHeightDeviation~PctCarbonation*OperatingPressure*LineSpeed, data = Eamaple5_13)
+summary(mod)
+
+interaction.plot(
+  x.factor=Eamaple5_13$PctCarbonation, 
+  trace.factor=Eamaple5_13$OperatingPressure,
+  response= Eamaple5_13$FillHeightDeviation
+)
+#interaction Pressure (B)
+interaction.plot(
+  x.factor=Eamaple5_13$PctCarbonation, 
+  trace.factor=rep(1, times=length(Eamaple5_13$PctCarbonation)),
+  response= Eamaple5_13$FillHeightDeviation
+)
+##interaction OperatingPressure (A)
+interaction.plot(
+  x.factor=Eamaple5_13$OperatingPressure, 
+  trace.factor=rep(1, times=length(Eamaple5_13$OperatingPressure)),
+  response= Eamaple5_13$FillHeightDeviation
+)
+
+interaction.plot(
+  x.factor=Eamaple5_13$LineSpeed, 
+  trace.factor=rep(1, times=length(Eamaple5_13$LineSpeed)),
+  response= Eamaple5_13$FillHeightDeviation
+)
+
+
