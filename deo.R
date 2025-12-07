@@ -344,5 +344,16 @@ interaction.plot(
   trace.factor=rep(1, times=length(Eamaple5_13$LineSpeed)),
   response= Eamaple5_13$FillHeightDeviation
 )
-
+#######################################
+#######################################
+y<-c(90, 86, 96, 84, 100, 92, 92, 81, 
+     102, 87, 106, 90, 105, 97, 96, 80,
+     114, 93, 112, 91, 108, 95, 98, 83)
+Ground_clutter<-factor(rep(c("low", "medium", "High"), each=8))
+operators<-factor(rep(c(1, 2, 3, 4), each=2, times=3))
+fiter_type<-factor(rep(c(1, 2, 1, 2, 1, 2, 1, 2), times=3))
+tabel5.21<-data.frame(y, Ground_clutter, operators, fiter_type)
+mod<-aov(y~Ground_clutter*fiter_type+operators, data=tabel5.21)
+summary(mod)
+length(fiter_type)
 
