@@ -356,4 +356,5 @@ tabel5.21<-data.frame(y, Ground_clutter, operators, fiter_type)
 mod<-aov(y~Ground_clutter*fiter_type+operators, data=tabel5.21)
 summary(mod)
 length(fiter_type)
+####
 
